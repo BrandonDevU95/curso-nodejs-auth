@@ -8,9 +8,11 @@ module.exports = {
   development: {
     url: URI,
     dialect: 'postgres',
+    logging: false,
   },
   production: {
     url: URI,
     dialect: 'postgres',
+    logging: (...msg) => console.log(msg),
   },
 };
