@@ -24,6 +24,7 @@ const JWTStrategy = new Strategy(options, async (tokenPayload, done) => {
 //         return done(boom.unauthorized('User not found'), false);
 //       }
 //       delete user.dataValues.password;
+//       delete user.dataValues.recoveryToken;
 //       return done(null, user);
 //     })
 //     .catch((err) => {
