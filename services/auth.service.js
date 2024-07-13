@@ -56,7 +56,7 @@ class AuthService {
       to: `${user.email}`, // list of receivers
       subject: 'Nuevo correo de prueba', // Subject line
       text: 'Estoy usando Nodemailer!', // plain text body
-      html: `<b>Holaaaaaaaaaa! ${user.name} ${user.last_name}</b>`, // html body
+      html: `<b>Holaaaaaaaaaa!</b>`, // html body
     });
 
     return { message: `Email sent to ${user.email}` };
