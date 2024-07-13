@@ -1,9 +1,7 @@
 const { Strategy } = require('passport-local');
 
-const UserService = require('../../../services/user.service');
-const boom = require('@hapi/boom');
-const bcrypt = require('bcrypt');
-const service = new UserService();
+const AuthService = require('../../../services/auth.service');
+const service = new AuthService();
 
 const LocalStrategy = new Strategy(
   {
@@ -11,23 +9,12 @@ const LocalStrategy = new Strategy(
     passwordField: 'password',
   },
   async (email, password, done) => {
-    service
-      .findByEmail(email)
-      .then((user) => {
-        if (!user) {
-          return done(boom.unauthorized('User not found'), false);
-        }
-        bcrypt.compare(password, user.password, (err, result) => {
-          if (err || !result) {
-            return done(boom.unauthorized('Invalid password'), false);
-          }
-          delete user.dataValues.password;
-          return done(null, user);
-        });
-      })
-      .catch((err) => {
-        return done(err);
-      });
+    try {
+      const user = await service.getUser(email, password);
+      done(null, user);
+    } catch (error) {
+      done(error, false);
+    }
   }
 );
 
